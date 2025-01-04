@@ -23,8 +23,7 @@ public class Main {
                 case 1:
                     if (Login.loginToSystem()) {
                         System.out.println("Logging in as " + Login.username + "...");
-                        Inventory.viewInventory();
-
+                        inventoryChoices();
                     } else {
                         System.out.println("Login failed. Username or password is incorrect.");
                     }
@@ -42,6 +41,38 @@ public class Main {
     }
 
     private static void inventoryChoices() {
+        System.out.println("Choose:\n" +
+                "1. View inventory\n" +
+                "2. Add item to inventory\n" +
+                "3. Remove item from inventory");
+        int userChoice = userInput.nextInt();
 
+        String itemType;
+        String itemName;
+        int addQuantity;
+        int removeQuantity;
+        switch(userChoice) {
+            case 1:
+                Inventory.viewInventory();
+                break;
+            case 2:
+                System.out.print("Item type: ");
+                itemType = userInput.next();
+                System.out.print("Item name: ");
+                itemName = userInput.next();
+                System.out.print("Item quantity: ");
+                addQuantity = userInput.nextInt();
+                Inventory.addItem(itemType, itemName, addQuantity);
+                break;
+            case 3:
+                System.out.print("Item type: ");
+                itemType = userInput.next();
+                System.out.print("Item name: ");
+                itemName = userInput.next();
+                System.out.print("Item quantity: ");
+                removeQuantity = userInput.nextInt();
+                Inventory.removeItem(itemType, itemName, removeQuantity);
+                break;
+        }
     }
 }

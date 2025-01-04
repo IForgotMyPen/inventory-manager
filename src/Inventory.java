@@ -9,12 +9,48 @@ public class Inventory {
     private static final File userInventoryInfo = new File("user-data/user-inventory-info.txt");
     private static final ArrayList<Item> inventoryList = makeInventoryList();
 
-    public static void addItem(String itemName, int addQuantity) {
+    public static void addItem(String itemType, String itemName, int addQuantity) {
+        boolean itemInInventory = false;
+        Item existingItem;
+        int existingItemIndex = 0;
+        for (Item item : inventoryList) {
+            if (item.getItemName().equals(itemName)) {
+                itemInInventory = true;
+                existingItemIndex = inventoryList.indexOf(item);
+                break;
+            }
+        }
+        if (itemInInventory) {
+            existingItem = inventoryList.get(existingItemIndex);
+            existingItem.setItemQuantity(existingItem.getItemQuantity() + addQuantity);
+        } else {
+            Item newItem = new Item(Login.username, itemType, itemName, addQuantity);
+            inventoryList.add(newItem);
+        }
 
+        updateInventoryFile();
     }
 
-    public static void removeItem(String itemName, int removeQuantity) {
+    public static void removeItem(String itemType, String itemName, int removeQuantity) {
+        boolean itemInInventory = false;
+        Item existingItem;
+        int existingItemIndex = 0;
+        for (Item item : inventoryList) {
+            if (item.getItemName().equals(itemName)) {
+                itemInInventory = true;
+                existingItemIndex = inventoryList.indexOf(item);
+                break;
+            }
+        }
+        if (itemInInventory) {
+            existingItem = inventoryList.get(existingItemIndex);
+            existingItem.setItemQuantity(existingItem.getItemQuantity() - removeQuantity);
 
+            if (existingItem.getItemQuantity() <= 0) {
+                inventoryList.remove(existingItemIndex);
+            }
+        }
+        updateInventoryFile();
     }
 
     public static void viewInventory() {
