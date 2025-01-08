@@ -36,7 +36,7 @@ public class Inventory {
         Item existingItem;
         int existingItemIndex = 0;
         for (Item item : inventoryList) {
-            if (item.getItemName().equals(itemName)) {
+            if (item.getItemName().equals(itemName) && item.getItemUser().equals(Login.username)) {
                 itemInInventory = true;
                 existingItemIndex = inventoryList.indexOf(item);
                 break;
