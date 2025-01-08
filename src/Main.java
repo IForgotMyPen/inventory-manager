@@ -12,32 +12,42 @@ public class Main {
     }
 
     private static void loginChoices() {
+        boolean validInput = true;
         int userChoice;
-        System.out.println("Choose:\n" +
-                "1. Login to existing account\n" +
-                "2. Create a new account");
-        try {
-            userChoice = userInput.nextInt();
+        do {
+            System.out.println("Choose:\n" +
+                    "1. Login to existing account\n" +
+                    "2. Create a new account\n" +
+                    "3. End");
+            try {
+                userChoice = userInput.nextInt();
+                switch (userChoice) {
+                    case 1:
+                        if (Login.loginToSystem()) {
+                            System.out.println("Logging in as " + Login.username + "...");
+                            inventoryChoices();
+                        } else {
+                            System.out.println("Login failed. Username or password is incorrect.");
+                        }
+                        break;
+                    case 2:
+                        Login.createNewLogin();
+                        break;
+                    case 3:
+                        System.out.println("Ending...");
+                        break;
+                }
 
-            switch(userChoice) {
-                case 1:
-                    if (Login.loginToSystem()) {
-                        System.out.println("Logging in as " + Login.username + "...");
-                        inventoryChoices();
-                    } else {
-                        System.out.println("Login failed. Username or password is incorrect.");
-                    }
-                    break;
-                case 2:
-                    Login.createNewLogin();
-                    break;
+            } catch (InputMismatchException e) {
+                validInput = false;
+                userInput.next();
+                System.out.println("ERROR in loginChoices() method: userInput incorrect data type.");
+            } catch (NoSuchElementException e) {
+                System.out.println("ERROR in loginChoices() method: userInput empty.");
+                System.out.println("Ending...");
+                break;
             }
-
-        } catch (InputMismatchException e) {
-            System.out.println("ERROR in loginChoices() method: userInput incorrect data type.");
-        } catch (NoSuchElementException e) {
-            System.out.println("ERROR in loginChoices() method: userInput empty.");
-        }
+        } while (!validInput);
     }
 
     private static void inventoryChoices() {
