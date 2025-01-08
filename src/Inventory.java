@@ -92,7 +92,7 @@ public class Inventory {
             int count = 0;
             for (Item item : inventoryList) {
                 count++;
-                fileWriter.write(Login.username + " " + item.getItemType() + " " + item.getItemName() + " " + item.getItemQuantity());
+                fileWriter.write(item.getItemUser() + " " + item.getItemType() + " " + item.getItemName() + " " + item.getItemQuantity());
                 if (count != inventoryList.size()) {
                     fileWriter.write("\n");
                 }
