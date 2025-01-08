@@ -31,6 +31,8 @@ public class Inventory {
         updateInventoryFile();
     }
 
+    //using itemType parameter for now so I can later add a way to remove items that might have the
+    //same name, but different item types - for now, I will just assume that won't happen
     public static void removeItem(String itemType, String itemName, int removeQuantity) {
         boolean itemInInventory = false;
         Item existingItem;
@@ -49,6 +51,8 @@ public class Inventory {
             if (existingItem.getItemQuantity() <= 0) {
                 inventoryList.remove(existingItemIndex);
             }
+        } else {
+            System.out.println("None of that item in inventory!");
         }
         updateInventoryFile();
     }
